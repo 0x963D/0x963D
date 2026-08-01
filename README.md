@@ -16,4 +16,4 @@ Postgres · AWS · GCP · Vercel
 Technical Lead contract, or a focused fractional mandate.
 Send the product, the constraint, the outcome, the timeline.
 
-[LinkedIn](https://www.linkedin.com/in/danvdoca) · [Portfolio](https://danvdoca.vercel.app)
+[LinkedIn](https://www.linkedin.com/in/danvdoca) · [Portfolio](https://dan.artdevium.com)
