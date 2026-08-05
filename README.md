@@ -1,19 +1,33 @@
 ### ❯_: Dan Doca
 
-Principal Engineer — hands-on technical ownership from architecture through production.
+I build product systems and the tools that keep them understandable in production.
 
-I build and stabilize product systems: web, mobile, APIs, data, integrations, reliability,
-and incident recovery.
+Most of my work sits across a few connected concerns:
 
-**Now** — Co-founder & CTO at New Yolk: a commercial web + mobile platform serving
-12k+ monthly active customers and 17k+ unique paying customers, with $15M+ completed
-customer deposits.
+- full-stack product architecture across web, mobile, APIs, data, and integrations;
+- explicit state, ownership, failure paths, verification, and recovery;
+- developer tooling and automation that compound repeated engineering judgment;
+- reliability shaped by real incidents rather than diagrams alone; and
+- creative runtimes spanning browsers, graphics, shaders, audio, and GPU tooling.
 
-**Stack** — TypeScript · React · Next.js · React Native/Expo · Node.js · tRPC · Prisma ·
-Postgres · AWS · GCP · Vercel
+#### Working principles
 
-**Work with me** — one serious, fully remote B2B engagement: full-time Principal Engineer /
-Technical Lead contract, or a focused fractional mandate.
-Send the product, the constraint, the outcome, the timeline.
+```text
+make state explicit
+design the recovery path with the happy path
+keep architecture close to production
+automate repeated judgment, not accountability
+prefer inspectable evidence over confident prose
+```
+
+#### Public traces
+
+- [Configurable project-context discovery](https://github.com/pbakaus/impeccable/pull/123) — added and tested repository-external context resolution; merged upstream.
+- [Humans.ai asset and chain integration](https://github.com/osmosis-labs/assetlists/pull/1120) — integrated chain and asset metadata into a shared ecosystem registry.
+- [IBC channel safety update](https://github.com/cosmos/chain-registry/pull/3858) — updated cross-chain metadata with an explicit stranded-transfer check.
+
+#### Current tools
+
+`TypeScript` `React` `Next.js` `React Native` `Node.js` `Postgres` `Python` `Docker` `AWS` `GCP`
 
 [LinkedIn](https://www.linkedin.com/in/danvdoca) · [Portfolio](https://dan.artdevium.com)
