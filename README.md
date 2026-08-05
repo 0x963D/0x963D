@@ -20,14 +20,6 @@ automate repeated judgment, not accountability
 prefer inspectable evidence over confident prose
 ```
 
-#### Public traces
-
-- [Configurable project-context discovery](https://github.com/pbakaus/impeccable/pull/123) — added and tested repository-external context resolution; merged upstream.
-- [Humans.ai asset and chain integration](https://github.com/osmosis-labs/assetlists/pull/1120) — integrated chain and asset metadata into a shared ecosystem registry.
-- [IBC channel safety update](https://github.com/cosmos/chain-registry/pull/3858) — updated cross-chain metadata with an explicit stranded-transfer check.
-
 #### Current tools
 
 `TypeScript` `React` `Next.js` `React Native` `Node.js` `Postgres` `Python` `Docker` `AWS` `GCP`
-
-[LinkedIn](https://www.linkedin.com/in/danvdoca) · [Portfolio](https://dan.artdevium.com)
