@@ -7,7 +7,7 @@ Most of my work sits across a few connected concerns:
 - full-stack product architecture across web, mobile, APIs, data, and integrations;
 - explicit state, ownership, failure paths, verification, and recovery;
 - developer tooling and automation that compound repeated engineering judgment;
-- reliability shaped by real incidents rather than diagrams alone; and
+- reliability shaped by real incidents rather than diagrams alone;
 - creative runtimes spanning browsers, graphics, shaders, audio, and GPU tooling.
 
 #### Working principles
