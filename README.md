@@ -6,9 +6,9 @@ Most of my work sits across a few connected concerns:
 
 - full-stack product architecture across web, mobile, APIs, data, and integrations;
 - explicit state, ownership, failure paths, verification, and recovery;
-- developer tooling and automation that compound repeated engineering judgment;
+- developer tooling, agent workflows, and automation for implementation, review, and verification;
 - reliability shaped by real incidents rather than diagrams alone;
-- creative runtimes spanning browsers, graphics, shaders, audio, and GPU tooling.
+- web experiences and creative experiments with shaders, Blender, Unity, audio, and video.
 
 #### Working principles
 
@@ -22,4 +22,4 @@ prefer inspectable evidence over confident prose
 
 #### Current tools
 
-`TypeScript` `React` `Next.js` `React Native` `Node.js` `Postgres` `Python` `Docker` `AWS` `GCP`
+`TypeScript` `React` `Next.js` `React Native` `Expo` `Node.js` `Postgres` `Python` `Lua` `Docker` `AWS` `GCP`
