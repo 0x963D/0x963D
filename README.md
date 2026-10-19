@@ -1,12 +1,25 @@
 ### ❯_: Dan Doca
 
-Product Engineer at [Artdevium](https://artdevium.com).
+I build product systems and the tools that keep them understandable in production.
 
-I build web and mobile software, developer tools and agent workflows. Lately, I'm going deeper into web experiences, shaders, Blender and Unity, alongside audio and video experiments.
+Most of my work sits across a few connected concerns:
 
-A couple of places you'll find my contributions:
+- full-stack product architecture across web, mobile, APIs, data, and integrations;
+- explicit state, ownership, failure paths, verification, and recovery;
+- developer tooling, agent workflows, and automation for implementation, review, and verification;
+- reliability shaped by real incidents rather than diagrams alone;
+- web experiences and creative experiments with shaders, Blender, Unity, audio, and video.
 
-- [Impeccable](https://github.com/pbakaus/impeccable/pulls?q=is%3Apr+author%3A0x963D+is%3Amerged): project-context discovery and system-aware review themes.
-- [EllesmereUI](https://github.com/EllesmereGaming/EllesmereUI/pulls?q=is%3Apr+author%3A0x963D+is%3Amerged): Lua fixes for raid tools, cooldown UI, secure interactions and persistent settings.
+#### Working principles
 
-[Website](https://dan.artdevium.com) · [LinkedIn](https://www.linkedin.com/in/danvdoca) · [Email](mailto:danvdoca@gmail.com)
+```text
+make state explicit
+design the recovery path with the happy path
+keep architecture close to production
+automate repeated judgment, not accountability
+prefer inspectable evidence over confident prose
+```
+
+#### Current tools
+
+`TypeScript` `React` `Next.js` `React Native` `Expo` `Node.js` `Postgres` `Python` `Lua` `Docker` `AWS` `GCP`
