@@ -4,8 +4,8 @@ make_fight4.py  ·  builds fight-light.svg and fight-dark.svg  (v4, 30 s loop)
 
 Looks like a plain profile README. Isn't.
 
-Everything is SMIL. No JavaScript, no CSS, no external fonts, so GitHub's
-image proxy renders it as-is. Every word is its own <text> with a fixed
+Motion uses SMIL. No JavaScript or external fonts. A CSS fallback and separate
+still assets support reduced motion. Every word is its own <text> with a fixed
 textLength, so single words can be kicked, sliced and used as trampolines
 while the layout stays identical on every OS.
 
@@ -2586,18 +2586,28 @@ def render(theme):
     return "".join(out)
 
 
+def render_still(theme):
+    p = PALETTES[theme]
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" font-family="{FONT_STACK}">'
+            f'<rect width="{W}" height="{H}" fill="{p["bg"]}"/>'
+            f'<text x="0" y="{H1_Y}" font-size="32" font-weight="600" fill="{p["fg"]}">{html.escape(H1_TEXT)}</text>'
+            f'<path d="M0,{RULE_Y} H{W}" stroke="{p["rule"]}" stroke-width="1"/>'
+            + "".join(wd.plain(p["fg"]) for wd in ALL_WORDS) + '</svg>')
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Build the profile fight SVGs.")
     parser.add_argument("--check", action="store_true", help="Check generated files without writing")
     args = parser.parse_args()
     for theme in ("light", "dark"):
-        svg = render(theme)
-        destination = Path(__file__).resolve().parent / f"fight-{theme}.svg"
-        if args.check:
-            if not destination.exists() or destination.read_text(encoding="utf-8") != svg:
-                raise SystemExit(f"Out of date: {destination}")
-        else:
-            destination.write_text(svg, encoding="utf-8", newline="\n")
-        print(f"{destination.name}  {len(svg.encode()) / 1024:.0f} KB")
+        for suffix, renderer in (("", render), ("-still", render_still)):
+            svg = renderer(theme)
+            destination = Path(__file__).resolve().parent / f"fight-{theme}{suffix}.svg"
+            if args.check:
+                if not destination.exists() or destination.read_text(encoding="utf-8") != svg:
+                    raise SystemExit(f"Out of date: {destination}")
+            else:
+                destination.write_text(svg, encoding="utf-8", newline="\n")
+            print(f"{destination.name}  {len(svg.encode()) / 1024:.0f} KB")
     print("hole:", round(HX), round(HY), "top", round(HT), "bottom", round(HB), "right", round(HR))
 

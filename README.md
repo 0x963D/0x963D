@@ -1,4 +1,6 @@
 <picture>
+  <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: dark)" srcset="fight/fight-dark-still.svg">
+  <source media="(prefers-reduced-motion: reduce)" srcset="fight/fight-light-still.svg">
   <source media="(prefers-color-scheme: dark)" srcset="fight/fight-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="fight/fight-light.svg">
   <img src="fight/fight-light.svg" width="100%" alt="Hi, I'm Dan Doca. Product engineer. I build product systems and the tools that keep them understandable in production. Web, mobile, APIs, data, integrations, and creative experiments. Then a stickman breaks through the page and a fight starts.">

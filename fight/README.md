@@ -15,5 +15,7 @@ The 31-second fight, poses, effects, and palettes come from the supplied
 [source revision](https://github.com/bulletchicken/bulletchicken/blob/d412291fb8b52f9440755e513dafc623af56362f/fight/make_fight.py).
 Local changes are the profile copy and word targets, Windows font lookup,
 deterministic clip identifiers, output paths, a rebuild check, and a static
-introduction for reduced-motion preferences. The animation does not load scripts,
+introduction for reduced-motion preferences. The README selects separate still
+assets because motion preferences inside an SVG image are not reliable in every
+browser context. The animation does not load scripts,
 external images, fonts, or services. The profile has no visible attribution line.
