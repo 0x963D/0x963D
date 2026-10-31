@@ -10,16 +10,6 @@ Most of my work sits across a few connected concerns:
 - reliability shaped by real incidents rather than diagrams alone;
 - web experiences and creative experiments with shaders, Blender, Unity, audio, and video.
 
-#### Working principles
-
-```text
-make state explicit
-design the recovery path with the happy path
-keep architecture close to production
-automate repeated judgment, not accountability
-prefer inspectable evidence over confident prose
-```
-
 #### Current tools
 
 `TypeScript` `React` `Next.js` `React Native` `Expo` `Node.js` `Postgres` `Python` `Lua` `Docker` `AWS` `GCP`

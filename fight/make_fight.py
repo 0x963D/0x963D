@@ -81,7 +81,7 @@ FONT_B = ImageFont.truetype(str(_font_pair[1]), 16)
 FONT_STACK = "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif"
 
 PROFILE = (Path(__file__).resolve().parent / "profile.md").read_text(encoding="utf-8")
-INTRO, REMAINDER = PROFILE.split("\n#### Working principles\n", 1)
+INTRO, REMAINDER = PROFILE.split("\n#### Current tools\n", 1)
 _profile_lines = [line for line in INTRO.splitlines() if line]
 H1_TEXT = _profile_lines[0].removeprefix("### ")
 PARAS = [line.removeprefix("- ") for line in _profile_lines[1:]]
@@ -2601,13 +2601,16 @@ def render_still(theme):
 
 def render_readme():
     alt = html.escape(" ".join([H1_TEXT, *PARAS]), quote=True)
-    return ('<picture>\n'
-            '  <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: dark)" srcset="fight/fight-dark-still.svg">\n'
-            '  <source media="(prefers-reduced-motion: reduce)" srcset="fight/fight-light-still.svg">\n'
-            '  <source media="(prefers-color-scheme: dark)" srcset="fight/fight-dark.svg">\n'
-            '  <source media="(prefers-color-scheme: light)" srcset="fight/fight-light.svg">\n'
-            f'  <img src="fight/fight-light.svg" width="100%" alt="{alt}">\n'
-            '</picture>\n\n#### Working principles\n' + REMAINDER)
+    # GitHub replaces theme media queries with its account theme, dropping any
+    # combined motion condition. Keep motion selection separate from theme visibility.
+    pictures = []
+    for theme in ("dark", "light"):
+        pictures.append(
+            '<picture>\n'
+            f'  <source media="(prefers-reduced-motion: reduce)" srcset="fight/fight-{theme}-still.svg">\n'
+            f'  <img src="fight/fight-{theme}.svg#gh-{theme}-mode-only" width="100%" alt="{alt}">\n'
+            '</picture>')
+    return "\n".join(pictures) + '\n\n#### Current tools\n' + REMAINDER
 
 
 if __name__ == "__main__":
