@@ -2606,10 +2606,11 @@ def render_readme():
     pictures = []
     for theme in ("dark", "light"):
         pictures.append(
+            f'<a href="fight/fight-{theme}.svg#gh-{theme}-mode-only">\n'
             '<picture>\n'
             f'  <source media="(prefers-reduced-motion: reduce)" srcset="fight/fight-{theme}-still.svg">\n'
-            f'  <img src="fight/fight-{theme}.svg#gh-{theme}-mode-only" width="100%" alt="{alt}">\n'
-            '</picture>')
+            f'  <img src="fight/fight-{theme}.svg" width="100%" alt="{alt}">\n'
+            '</picture>\n</a>')
     return "\n".join(pictures) + '\n\n#### Current tools\n' + REMAINDER
 
 
