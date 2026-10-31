@@ -1,4 +1,64 @@
-# Profile fight verification
+# Chrome playback correction
+
+Verified implementation:
+[`82da142`](https://github.com/0x963D/0x963D/tree/82da142803ba9e3358ae07e9eb294a44eef2a304),
+compared with deployed base `42f2ed222d1e43916ca7c9e382678d43453a6e63`.
+
+In Dan's signed-in Chrome, GitHub's explicit dark theme rewrote the combined
+theme/motion source condition to
+`(prefers-color-scheme: light),(prefers-color-scheme: dark)`.
+Chrome reported reduced motion as false but selected `fight-dark-still.svg`.
+The original browser QA did not exercise that account-theme override.
+
+The corrected README separates theme visibility from motion selection. GitHub's
+theme-fragment links show one picture; each picture uses a motion-only source
+condition and an animated fallback. The requested Working principles heading and
+code block are removed. The introduction, Current tools, and all four SVGs are
+unchanged.
+
+Before, the section Dan requested removing, from his supplied screenshot:
+
+![Before: Working principles](chrome-before.png)
+
+After, the corrected immutable README in Dan's signed-in Chrome:
+
+![After: animation followed by Current tools](chrome-after.jpg)
+
+On October 31, 2026, browser inspection of the candidate confirmed:
+
+- GitHub remained in explicit dark mode, with reduced motion false.
+- The visible image loaded `fight-dark.svg` from the exact candidate revision.
+  The alternative light image had zero width and its parent link was hidden.
+- Both source conditions remained `(prefers-reduced-motion: reduce)` and did not
+  match. Two captures of the same image area differed, confirming playback.
+- Current tools was the only heading below the animation. Working principles
+  and its code block were absent.
+
+A fresh read-only Codex reviewer examined the exact candidate against the base
+and found no actionable issues. Independent checks passed for regeneration,
+full-diff whitespace, identical SVG blobs, exact requested text deletion,
+unchanged introduction/tools, and the theme-link/motion-source markup. Heading,
+word, and alt-text escaping remained effective against malicious sample text.
+Still assets preserve the introduction and contain no animation. No scripts,
+event handlers, active embedded content, or external assets were introduced.
+
+The independent merge score was 9.5/10, with a deduction for reliance on GitHub's
+theme-fragment behavior. Go-live confidence was 9/10. The reviewer inspected the
+after screenshot and relied on the parent's actual Chrome playback check.
+Reduced-motion-on, explicit light theme, and narrow-screen browser checks were
+not repeated for this correction. Motion-only conditions and unchanged still
+assets were checked independently; existing mobile typography is unchanged.
+No user browser or OS settings were changed. Local security review was sufficient
+for this static README correction; no hosted or paid review ran.
+
+The release commit adds only this evidence and screenshots after the reviewed
+implementation. [PR #3](https://github.com/0x963D/0x963D/pull/3) records the final
+commit, merge, and live verification. Reverting that merge restores the preceding
+profile revision, including its known Chrome selection defect.
+
+## Original release verification
+
+The historical evidence below describes the initial release before this correction.
 
 Verified animation/source commit:
 [`85a57f1`](https://github.com/0x963D/0x963D/tree/85a57f1552435e6393c9ea5e43c7ad0ebabb92ed).
