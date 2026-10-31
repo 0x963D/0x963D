@@ -9,11 +9,9 @@ still assets support reduced motion. Every word is its own <text> with a fixed
 textLength, so single words can be kicked, sliced and used as trampolines
 while the layout stays identical on every OS.
 
-The copy opens like the mountjoy README (a struck-out "Dear Diary", then
-"First of all, let me get something straight: This is a README, not a
-diary.") Edit PARAS to change it. Words the fight uses by name: "called"
-(kicked apart), "Ted." (the hole, and later the bear's home), "teddy" /
-"Engineering" / "README," (sliced).
+Profile copy is loaded verbatim from profile.md. The original beat sheet below
+describes the supplied choreography; its word roles are mapped to existing words
+in Dan's profile, without adding or rewriting the profile's text.
 
 ANIMATION TOOLKIT
   anticipation, squash & stretch, easing on every tween, 6-pose run cycle,
@@ -61,9 +59,10 @@ from PIL import ImageFont
 T = 31.0
 EPS = 0.002
 LEAD_TRIM = 0.25      # the whole loop starts this much sooner (the calm opening is shortened)
-W, H, FLOOR = 830, 277, 272
-H1_Y, RULE_Y = 32, 50
-P_Y = [84, 124, 164, 204]
+W, H, FLOOR = 830, 325, 320
+H1_Y, H1_SIZE = 24, 20
+RULE_Y = 50  # Original character landing height; no heading rule is drawn.
+P_Y = [66, 106, 146, 172, 198, 224, 250]
 BODY_Y = -17
 # Liberation Sans and Arial have compatible metrics. SVG textLength fixes the result.
 _font_pairs = [
@@ -81,13 +80,13 @@ FONT = ImageFont.truetype(str(_font_pair[0]), 16)
 FONT_B = ImageFont.truetype(str(_font_pair[1]), 16)
 FONT_STACK = "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif"
 
-H1_TEXT = "Hi, I'm Dan Doca \U0001F44B"
-PARAS = [
-    "Product engineer. Creative experiments.",
-    "I build product systems and the tools that keep them understandable in **production.**",
-    "Web, mobile, APIs, data, and integrations.",
-    "I make things with shaders, Blender, Unity, audio, and video.",
-]
+PROFILE = (Path(__file__).resolve().parent / "profile.md").read_text(encoding="utf-8")
+INTRO, REMAINDER = PROFILE.split("\n#### Working principles\n", 1)
+_profile_lines = [line for line in INTRO.splitlines() if line]
+H1_TEXT = _profile_lines[0].removeprefix("### ")
+PARAS = [line.removeprefix("- ") for line in _profile_lines[1:]]
+BULLET_ROWS = [i for i, line in enumerate(_profile_lines[1:]) if line.startswith("- ")]
+assert len(PARAS) == len(P_Y), "Update the layout when the source paragraph count changes."
 PALETTES = {
     "light": dict(bg="#ffffff", fg="#1f2328", rule="#d1d9e0", red="#cf222e", spark="#e3b341",
                   blade="#d6dbe0", blade_edge="#6b7580", hamon="#ffffff", tsuba="#8a6d2f", wrap="#2b2b2b",
@@ -809,8 +808,8 @@ class Word:
         return self._text(fg)
 
 
-def layout(text, y):
-    words, x, sp = [], 0.0, FONT.getlength(" ")
+def layout(text, y, x=0.0):
+    words, sp = [], FONT.getlength(" ")
     for tok in text.split(" "):
         strike = tok.startswith("~~") and tok.endswith("~~")
         bold = tok.startswith("**") and tok.endswith("**")
@@ -821,8 +820,9 @@ def layout(text, y):
     return words
 
 
-LINES = [layout(p, P_Y[i]) for i, p in enumerate(PARAS)]
+LINES = [layout(p, P_Y[i], 32 if i in BULLET_ROWS else 0) for i, p in enumerate(PARAS)]
 ALL_WORDS = [wd for line in LINES for wd in line]
+assert all(wd.x + wd.w <= W for wd in ALL_WORDS), "Profile text extends past the canvas."
 
 
 def word(line, text):
@@ -832,16 +832,16 @@ def word(line, text):
     raise KeyError(text)
 
 
-_kicked = word(3, "things")
+_kicked = word(3, "state,")
 NL, _x = [], _kicked.x
 for ch in _kicked.text:
     cw = FONT.getlength(ch)
     NL.append(Word(ch, _x, _kicked.y, cw, fixed_width=False))
     _x += cw
 LINES[3] = [wd for wd in LINES[3] if wd is not _kicked]
-RD = word(3, "video.")
+RD = word(3, "recovery;")
 LINES[3] = [wd for wd in LINES[3] if wd is not RD]
-S1, S2, S3 = word(3, "shaders,"), word(2, "APIs,"), word(1, "production.")
+S1, S2, S3 = word(3, "ownership,"), word(2, "architecture"), word(1, "connected")
 IX, IY = RD.cx + 4, RD.cy + 1          # where the first crack starts
 
 # ---------------------------------------------------------------- effect library
@@ -2514,8 +2514,7 @@ def ghost_text_svg(p):
     op.hold(T_COLLAPSE - 0.2)
     op.add(T_COLLAPSE, 0, "in")
     out = ['<g opacity="0">', animate("opacity", op, str),
-           f'<text x="0" y="{H1_Y}" font-size="32" font-weight="600" fill="#ffffff">{html.escape(H1_TEXT)}</text>',
-           f'<path d="M0,{RULE_Y} H{W}" stroke="#ffffff" stroke-width="1"/>']
+           intro_heading("#ffffff"), bullets("#ffffff")]
     for wd in ALL_WORDS:
         out.append(wd.plain("#ffffff"))
     out.append("</g>")
@@ -2538,6 +2537,14 @@ def glow_svg(p):
             + animate("opacity", GLOW, str) + "</circle></g>")
 
 
+def intro_heading(fg):
+    return f'<text x="0" y="{H1_Y}" font-size="{H1_SIZE}" font-weight="600" fill="{fg}">{html.escape(H1_TEXT)}</text>'
+
+
+def bullets(fg):
+    return "".join(f'<circle cx="14" cy="{P_Y[i] - 5}" r="2" fill="{fg}"/>' for i in BULLET_ROWS)
+
+
 def render(theme):
     p = PALETTES[theme]
     out = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" font-family="{FONT_STACK}">',
@@ -2550,8 +2557,7 @@ def render(theme):
            f'<rect width="{W}" height="{H}" fill="{p["bg"]}"/>',
            '<style>.still{display:none}@media(prefers-reduced-motion:reduce){.fight{display:none}.still{display:inline}}</style>',
            '<g class="fight">', animate_tf("translate", FRAME, f_xy),
-           f'<text x="0" y="{H1_Y}" font-size="32" font-weight="600" fill="{p["fg"]}">{html.escape(H1_TEXT)}</text>',
-           f'<path d="M0,{RULE_Y} H{W}" stroke="{p["rule"]}" stroke-width="1"/>']
+           intro_heading(p["fg"]), bullets(p["fg"])]
     for line in LINES:
         for wd in line:
             out.append(wd.all_svg(p["fg"]))
@@ -2579,8 +2585,7 @@ def render(theme):
         out.extend(fn(p) for fn in LAYERS[name])
     out.append("</g>")
     out.append('<g class="still">')
-    out.append(f'<text x="0" y="{H1_Y}" font-size="32" font-weight="600" fill="{p["fg"]}">{html.escape(H1_TEXT)}</text>')
-    out.append(f'<path d="M0,{RULE_Y} H{W}" stroke="{p["rule"]}" stroke-width="1"/>')
+    out.append(intro_heading(p["fg"]) + bullets(p["fg"]))
     out.extend(wd.plain(p["fg"]) for wd in ALL_WORDS)
     out.append("</g></svg>")
     return "".join(out)
@@ -2590,9 +2595,19 @@ def render_still(theme):
     p = PALETTES[theme]
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" font-family="{FONT_STACK}">'
             f'<rect width="{W}" height="{H}" fill="{p["bg"]}"/>'
-            f'<text x="0" y="{H1_Y}" font-size="32" font-weight="600" fill="{p["fg"]}">{html.escape(H1_TEXT)}</text>'
-            f'<path d="M0,{RULE_Y} H{W}" stroke="{p["rule"]}" stroke-width="1"/>'
+            + intro_heading(p["fg"]) + bullets(p["fg"])
             + "".join(wd.plain(p["fg"]) for wd in ALL_WORDS) + '</svg>')
+
+
+def render_readme():
+    alt = html.escape(" ".join([H1_TEXT, *PARAS]), quote=True)
+    return ('<picture>\n'
+            '  <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: dark)" srcset="fight/fight-dark-still.svg">\n'
+            '  <source media="(prefers-reduced-motion: reduce)" srcset="fight/fight-light-still.svg">\n'
+            '  <source media="(prefers-color-scheme: dark)" srcset="fight/fight-dark.svg">\n'
+            '  <source media="(prefers-color-scheme: light)" srcset="fight/fight-light.svg">\n'
+            f'  <img src="fight/fight-light.svg" width="100%" alt="{alt}">\n'
+            '</picture>\n\n#### Working principles\n' + REMAINDER)
 
 
 if __name__ == "__main__":
@@ -2609,5 +2624,12 @@ if __name__ == "__main__":
             else:
                 destination.write_text(svg, encoding="utf-8", newline="\n")
             print(f"{destination.name}  {len(svg.encode()) / 1024:.0f} KB")
+    readme = Path(__file__).resolve().parents[1] / "README.md"
+    expected = render_readme()
+    if args.check:
+        if readme.read_text(encoding="utf-8") != expected:
+            raise SystemExit("README.md differs from the approved profile copy")
+    else:
+        readme.write_text(expected, encoding="utf-8", newline="\n")
     print("hole:", round(HX), round(HY), "top", round(HT), "bottom", round(HB), "right", round(HR))
 
