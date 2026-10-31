@@ -2632,4 +2632,3 @@ if __name__ == "__main__":
     else:
         readme.write_text(expected, encoding="utf-8", newline="\n")
     print("hole:", round(HX), round(HY), "top", round(HT), "bottom", round(HB), "right", round(HR))
-

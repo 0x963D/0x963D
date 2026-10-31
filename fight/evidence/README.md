@@ -34,5 +34,45 @@ Checks performed on October 31, 2026:
   introduction is also present in the image's alt text. The existing principles
   code block scrolls horizontally on narrow screens.
 
-This PR remains draft pending visual acceptance. No merge or live-profile change
-has occurred. The task checkout is retained for corrections until that decision.
+Dan accepted candidate
+[`43639e0`](https://github.com/0x963D/0x963D/tree/43639e03f27f9394eed54b8ec1840ca59a80b918)
+and authorized publication on October 31, 2026.
+
+## Independent release review
+
+A fresh, read-only Codex reviewer examined
+`43639e03f27f9394eed54b8ec1840ca59a80b918` against
+`c7131138373ff58aeea55916254a30097f5dd1f5`. No correctness or security findings
+blocked release. The reviewer independently verified:
+
+- `python -B fight/make_fight.py --check` passes for the four SVGs and README.
+- The profile source matches the original README. Both static introductions
+  preserve its words and punctuation, and the native Markdown remainder is unchanged.
+- Comparison with the pinned upstream confirms the original choreography, with
+  scoped profile layout, word targets, reproducibility, and reduced-motion changes.
+- SVG XML, unique IDs, clip references, and all 1,190 animation tracks per animated
+  theme pass structural checks. Still assets contain no animation.
+- Heading, word, and alt-text inputs escape markup. SVGs contain no scripts,
+  event handlers, external resources, or active embedded content.
+- The committed before/after image was inspected. The preview video lasts 33 seconds.
+  The implementation at `85a57f1` matches the reviewed candidate.
+
+The review found one cosmetic trailing blank line at the end of the generator.
+That line was removed during closeout. The generated SVGs, profile wording, and
+root README remain byte-identical to the accepted candidate. The final release
+check covers the full branch diff and regenerates no files. This report and that
+whitespace correction are the only changes after independent review.
+
+Browser theme, reduced-motion, and mobile coverage comes from the source-bound QA
+above. The reviewer did not repeat browser QA because the shared browser was occupied.
+Hosted review was unnecessary for this static README and local generator; security
+review was performed locally. No CI workflow is configured in this repository.
+
+The reviewer assigned a merge score of 9.5/10, accounting for platform-dependent
+font regeneration and the now-resolved whitespace nit. Go-live confidence was
+9/10, accounting for accepted small phone text and the browser coverage limitation.
+
+Publication updates this profile repository's default `main` branch through
+[PR #2](https://github.com/0x963D/0x963D/pull/2). The previous profile revision is
+`c7131138373ff58aeea55916254a30097f5dd1f5`. Reverting the merge restores that README.
+The PR records the final release commit and live-profile verification.
