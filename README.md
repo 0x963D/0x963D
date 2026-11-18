@@ -15,10 +15,6 @@
 
 `TypeScript` `React` `Next.js` `React Native` `Expo` `Node.js` `Postgres` `Python` `Lua` `Docker`
 
-#### Projects
-
-- [lane-router](https://github.com/0x963D/lane-router), a GitHub Action and CLI that routes monorepo CI to the test lanes a change can affect, explains every decision, and runs every lane when it cannot be sure.
-
 #### Merged upstream
 
 - [EllesmereUI](https://github.com/EllesmereGaming/EllesmereUI/pulls?q=is%3Apr+author%3A0x963D+is%3Amerged), a World of Warcraft interface suite. 10 pull requests in Lua across raid tools, cooldown interfaces, damage meters and the quest tracker.
